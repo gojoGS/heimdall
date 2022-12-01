@@ -1,6 +1,6 @@
 use crate::log::{LogLevel, LogLine};
 use crate::parse::{LineParser, ParseResult};
-use lazy_static::lazy_static;
+
 use regex::Regex;
 
 pub struct RegexParser;

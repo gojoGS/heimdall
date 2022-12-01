@@ -28,7 +28,7 @@ fn main() {
 }
 
 fn startup(args: &CliArgs) -> Result<(), io::Error> {
-    let mut config: AppConfig;
+    let config: AppConfig;
 
     if args.config.is_none() {
         println!("creating config file");
@@ -39,7 +39,7 @@ fn startup(args: &CliArgs) -> Result<(), io::Error> {
         config = config::load_config(path).expect("loading config failed");
     }
 
-    run(&args, &config)
+    run(args, &config)
 }
 
 fn run(args: &CliArgs, config: &AppConfig) -> Result<(), io::Error> {

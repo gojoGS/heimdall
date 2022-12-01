@@ -22,14 +22,14 @@ fn read_contents_file(mut file: &File) -> Result<ReadResult, io::Error> {
 }
 
 fn read_contents_path(path: &str) -> Result<ReadResult, io::Error> {
-    let mut file = File::open(path)?;
+    let file = File::open(path)?;
     read_contents_file(&file)
 }
 
 pub fn read_contents(descriptor: LogFileDescriptor) -> Result<ReadResult, io::Error> {
     match descriptor {
         LogFileDescriptor::Path(path) => read_contents_path(&path),
-        LogFileDescriptor::File(file) => read_contents_file(&file),
+        LogFileDescriptor::File(file) => read_contents_file(file),
     }
 }
 
@@ -39,12 +39,12 @@ pub fn read_contents_from(
 ) -> Result<ReadResult, io::Error> {
     match descriptor {
         LogFileDescriptor::Path(path) => read_contents_from_path(&path, position),
-        LogFileDescriptor::File(file) => read_contents_from_file(&file, position),
+        LogFileDescriptor::File(file) => read_contents_from_file(file, position),
     }
 }
 
 fn read_contents_from_path(path: &str, position: u64) -> Result<ReadResult, io::Error> {
-    let mut file = File::open(path)?;
+    let file = File::open(path)?;
     read_contents_from_file(&file, position)
 }
 
