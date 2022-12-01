@@ -1,0 +1,21 @@
+[package]
+name = "heimdall"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+notify = "5.0.0"
+tui = "0.19.0"
+crossterm = "0.25.0"
+regex = "1.7.0"
+lazy_static = "1.4.0"
+colored = "2.0.0"
+clap = {version = "4.0.29", features = ["derive"] }
+config = "0.13.2"
+toml = "0.5.9"
+serde = "1.0.148"
+serde_derive = "1.0.148"
+serde_json = "1.0.89"
+dirs = "4.0.0"
