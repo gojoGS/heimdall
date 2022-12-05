@@ -77,7 +77,12 @@ fn run(args: &CliArgs, config: &AppConfig) -> Result<(), io::Error> {
                 content = re_read_result.content;
                 pos = re_read_result.position;
 
-                print!("{}", content);
+                let parsed_diff = RegexParser::parse(content.as_str());
+                parsed_diff
+                    .lines
+                    .into_iter()
+                    .map(colorize_log_line)
+                    .for_each(|line| println!("{}", line));
             }
             Err(e) => println!("watch error: {:?}", e),
         }
