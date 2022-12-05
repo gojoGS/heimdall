@@ -1,8 +1,9 @@
-name: Rust
+name: Build & test
 
 on:
   push:
-    branches: [ "main" ]
+    paths: ["src/**", "Cargo.toml"]
+    branches: [ "dev" ]
   pull_request:
     branches: [ "main" ]
 
@@ -21,6 +22,12 @@ jobs:
       with:
           toolchain: nightly
           override: true
+          components: clippy
+    - name: Lint
+      uses: actions-rs/clippy-check@v1
+      with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --all-features
     - name: Build
       run: cargo build --verbose
     - name: Run tests
