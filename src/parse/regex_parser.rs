@@ -1,5 +1,6 @@
 use crate::log::{LogLevel, LogLine};
 use crate::parse::{LineParser, ParseResult};
+use lazy_static::lazy_static;
 
 use regex::Regex;
 
@@ -14,7 +15,9 @@ impl LineParser for RegexParser {
 }
 
 fn line_to_log_line(line: &str) -> LogLine {
-    let re: Regex = Regex::new(r"TRACE|DEBUG|INFO|WARN|ERROR|FATAL").unwrap();
+    lazy_static! {
+        static ref re: Regex = Regex::new(r"TRACE|DEBUG|INFO|WARN|ERROR|FATAL").unwrap();
+    }
 
     let captures = re.captures(line);
 

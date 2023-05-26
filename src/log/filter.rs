@@ -1,22 +1,34 @@
 use crate::log::LogLine;
 
-type LogFilterCriterion = dyn Fn(&LogLine) -> bool;
-
 pub struct ParseResultFilter {
-    criteria: Vec<Box<LogFilterCriterion>>,
+    filters: Vec<Box<LogFilter>>,
 }
+
+type LogFilter = dyn Fn(&LogLine) -> bool;
 
 impl ParseResultFilter {
     pub fn new() -> ParseResultFilter {
-        ParseResultFilter { criteria: vec![] }
+        ParseResultFilter { filters: vec![] }
     }
 
-    pub fn add_criterion(&mut self, criterion: Box<LogFilterCriterion>) -> &mut ParseResultFilter {
-        self.criteria.push(criterion);
+    pub fn add_filter(&mut self, filter: Box<LogFilter>) -> &mut ParseResultFilter {
+        self.filters.push(filter);
         self
     }
 
-    // pub fn filter(&self, lines: Vec<LogLine>, crit: Box<LogFilterCriterion>) -> Vec<&LogLine> {
-    //     lines.iter().filter(|l| crit(l)).collect::<Vec<_>>()
-    // }
+    pub fn filter(&self, vec: &Vec<LogLine>) {
+        for elem in vec {
+            println!("{}", self.matches(elem))
+        }
+    }
+
+    fn matches(&self, line: &LogLine) -> bool {
+        for filter in &self.filters {
+            if !filter(line) {
+                return false;
+            }
+        }
+
+        true
+    }
 }
